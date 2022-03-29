@@ -81,11 +81,13 @@ export default new Vuex.Store({
       
     },
     deleteTask({ commit }, id) {
+      console.log(id)
       db.collection('tasks').doc({ id: id }).delete().then(() => {
         commit('deleteTask', id)
       })
     },
     updateTaskTitle({ commit }, payload) {
+      console.log(payload)
       db.collection('tasks').doc({ id: payload.id }).update({
         title: payload.title
       }).then(() => {
@@ -93,6 +95,8 @@ export default new Vuex.Store({
       })
     },
     updateTaskDueDate({ commit }, payload) {
+      console.log(payload)
+
       db.collection('tasks').doc({ id: payload.id }).update({
         dueDate: payload.dueDate
       }).then(() => {

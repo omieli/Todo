@@ -19,7 +19,7 @@
             No
           </v-btn>
           <v-btn
-            @click="$store.commit('deleteTask',task.id)"
+            @click="$store.dispatch('deleteTask', task.id)"
             color="red darken-1"
             text
           >

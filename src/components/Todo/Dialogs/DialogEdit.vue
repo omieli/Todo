@@ -1,14 +1,28 @@
 <template>
-  <v-dialog :value="true" persistent max-width="290">
+  <v-dialog
+    :value="true"
+    persistent
+    max-width="290"
+  >
     <v-card>
-      <v-card-title class="text-h5"> Edit task </v-card-title>
-      <v-card-text
-        >Edit title of this task:
-        <v-text-field v-model="taskTitle" @keyup.enter="saveTask" />
+      <v-card-title class="headline">
+        Edit task
+      </v-card-title>
+      <v-card-text>
+        Edit the title of this task:
+        <v-text-field
+          v-model="taskTitle"
+          @keyup.enter="saveTask"
+        />
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn text @click="$emit('close')"> Cancel </v-btn>
+        <v-btn
+          @click="$emit('close')"
+          text
+        >
+          Cancel
+        </v-btn>
         <v-btn
           @click="saveTask"
           :disabled="taskTitleInvalid"
@@ -24,33 +38,35 @@
 
 <script>
 export default {
-  props: ["task"],
+  props: ['task'],
   data() {
     return {
-      taskTitle: null,
-    };
+      taskTitle: null
+    }
   },
   computed: {
     taskTitleInvalid() {
-      return !this.taskTitle || this.taskTitle === this.task.title;
-    },
+      return !this.taskTitle || this.taskTitle === this.task.title
+    }
   },
   methods: {
     saveTask() {
       if (!this.taskTitleInvalid) {
         let payload = {
           id: this.task.id,
-          title: this.taskTitle,
-        };
-        this.$store.commit("updateTaskTitle", payload);
-        this.$emit("close");
+          title: this.taskTitle
+        }
+        this.$store.dispatch('updateTaskTitle', payload)
+        this.$emit('close')
       }
-    },
+    }
   },
   mounted() {
-    this.taskTitle = this.task.title;
-  },
-};
+    this.taskTitle = this.task.title
+  }
+}
 </script>
 
-<style></style>
+<style>
+
+</style>
