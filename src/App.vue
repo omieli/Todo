@@ -51,9 +51,15 @@
           gradient="to top right, rgba(19,84,122,.5), rgba(128,208,199,.8)"
         ></v-img>
       </template>
-
-      <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
-
+      <v-tooltip right allow-overflow>
+      <template v-slot:activator="{ on, attrs }">
+      <v-app-bar-nav-icon @click="drawer = !drawer"
+        v-bind="attrs"
+        v-on="on"
+      ></v-app-bar-nav-icon>
+          </template>
+        <span>Open navigation menu</span>
+      </v-tooltip>
       <v-app-bar-title>Todo App</v-app-bar-title>
 
 

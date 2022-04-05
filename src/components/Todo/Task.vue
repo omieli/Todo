@@ -1,8 +1,12 @@
 <template>
   <div>
+    <v-tooltip top allow-overflow>
+    <template v-slot:activator="{ on, attrs }">
     <v-list-item
       @click="$store.dispatch('finishTask', task.id)"
       :class="{ 'blue lighten-5': task.done }"
+      v-bind="attrs"
+      v-on="on"
     >
       <template v-slot:default>
         <v-list-item-action >
@@ -28,6 +32,9 @@
         </v-list-item-action>
       </template>
     </v-list-item>
+    </template>
+    <span>Click to mark done/undone</span>
+    </v-tooltip>
     <v-divider></v-divider>
   </div>
 </template>

@@ -9,26 +9,10 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     tasks: [
-      // {
-      //   id: 1,
-      //   title: 'Wake up',
-      //   done: false,
-      //   dueDate: '2020-10-15'
-      // },
-      // {
-      //   id: 2,
-      //   title: 'Get bananas',
-      //   done: false,
-      //   dueDate: '2022-05-21'
-      // },
-      // {
-      //   id: 3,
-      //   title: 'Eat bananas',
-      //   done: false,
-      //   dueDate: null
-      // }
+
     ]
   },
+
   getters: {
   },
   mutations: {
@@ -57,7 +41,11 @@ export default new Vuex.Store({
       db.collection('tasks').get().then(tasks => {
         commit('setTasks', tasks)
       })
-    }
+    },
+    clearAllTasks(state) {
+      state.tasks = state.tasks.filter((task) => task !== task)
+      }
+    
   },
   actions: {
     addTask({ commit }, newTaskTitle) {
@@ -65,8 +53,7 @@ export default new Vuex.Store({
         id: Date.now(),
         title: newTaskTitle,
         done: false,
-        dueDate: null
-      }
+        dueDate: null     }
       db.collection('tasks').add(newTask).then(() => {
         commit('addTask', newTask)
       })
@@ -76,12 +63,11 @@ export default new Vuex.Store({
       db.collection('tasks').doc({ id: id }).update({
         done: !task.done
       }).then(() => {
-        commit('finishTask',id)
+        commit('finishTask', id)
       })
       
     },
     deleteTask({ commit }, id) {
-      console.log(id)
       db.collection('tasks').doc({ id: id }).delete().then(() => {
         commit('deleteTask', id)
       })
@@ -95,7 +81,6 @@ export default new Vuex.Store({
       })
     },
     updateTaskDueDate({ commit }, payload) {
-      console.log(payload)
 
       db.collection('tasks').doc({ id: payload.id }).update({
         dueDate: payload.dueDate
@@ -105,10 +90,14 @@ export default new Vuex.Store({
     },
     getTasks({ commit }) {
       db.collection('tasks').get().then(tasks => {
-        commit('setTasks',tasks)
+        commit('setTasks', tasks)
+      })
+    },
+    clearAllTasks({ commit }) {
+      db.collection('tasks').delete().then(() => {
+        commit('clearAllTasks')
       })
     }
-  },
-  modules: {
   }
-})
+}
+)
